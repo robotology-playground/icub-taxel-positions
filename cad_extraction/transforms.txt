@@ -1,0 +1,170 @@
+transform_L_SOLE_TRIANGLE1 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(108.083,-26.3973,0)) //triangle1 is considered the first triangle on the toe
+
+
+transform_L_SOLE_TRIANGLE2 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(112.100,-7.49946,0))
+
+
+
+
+transform_L_SOLE_TRIANGLE3 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(97.7424,5.42815,0))
+
+
+transform_L_SOLE_TRIANGLE4 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(101.759,24.3254,0))
+
+
+transform_L_SOLE_TRIANGLE5 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(87.4017,37.2536,0))
+
+
+
+transform_L_SOLE_TRIANGLE6 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(69.0273,31.2828,0))
+
+
+transform_L_SOLE_TRIANGLE7 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(65.0105,12.3855,0))
+
+
+
+
+transform_L_SOLE_TRIANGLE8 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(79.3680,-0.542605,0))
+
+
+
+transform_L_SOLE_TRIANGLE9 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(75.3512,-19.4399,0))
+
+
+transform_L_SOLE_TRIANGLE10 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(89.7087,-32.3680,0))
+
+
+transform_L_SOLE_TRIANGLE11 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(56.9768,-25.4106,0))
+
+
+transform_L_SOLE_TRIANGLE12 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(42.6192,-12.4825,0))
+
+
+transform_L_SOLE_TRIANGLE13 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(46.6361,6.41479,0))
+
+
+transform_L_SOLE_TRIANGLE14 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(32.2785,19.3429,0))
+
+
+transform_L_SOLE_TRIANGLE15 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-0.453468,26.3003,0))
+
+
+transform_L_SOLE_TRIANGLE16 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(13.9041,13.3722,0))
+
+
+transform_L_SOLE_TRIANGLE17 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(9.88724,-5.52508,0))
+
+
+transform_L_SOLE_TRIANGLE18 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(24.2448,-18.4532,0))
+
+
+transform_L_SOLE_TRIANGLE19 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-8.48718,-11.4958,0))
+
+
+
+
+transform_L_SOLE_TRIANGLE20 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-22.8447,1.43231,0))
+
+
+transform_L_SOLE_TRIANGLE21 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-18.8279,20.3296,0))
+
+
+transform_L_SOLE_TRIANGLE22 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-33.1854,33.2577,0))
+
+
+transform_L_SOLE_TRIANGLE23 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-51.5598,27.2870,0))
+
+
+transform_L_SOLE_TRIANGLE24 = iDynTree.Transform(iDynTree.Rotation(0.669131,-0.743145,0.0,  \
+                                             0.743145,0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-55.5767,8.38971,0))
+
+
+
+transform_L_SOLE_TRIANGLE25 = iDynTree.Transform(iDynTree.Rotation(-0.669131,0.743145,0.0,  \
+                                             -0.743145,-0.669131,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-41.2191,-4.53844,0))
+
+
+
+
+
+
+
+
+
+
+
+
+

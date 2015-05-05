@@ -1,0 +1,73 @@
+
+
+//taxel origin lies in taxel_3
+
+//taxel positions  6 and 10 are thermal pads and not pressure sensors, hence need to be ignored
+
+transform_TAXELORIGIN_TAXEL0 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(6.533,0,0))
+
+transform_TAXELORIGIN_TAXEL1 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(9.8,-5.66,0))
+
+transform_TAXELORIGIN_TAXEL2 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(3.267,-5.66,0))
+
+transform_TAXELORIGIN_TAXEL3 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(0,0,0))
+
+transform_TAXELORIGIN_TAXEL4 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-3.267,-5.66,0))
+
+transform_TAXELORIGIN_TAXEL5 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-9.8,-5.66,0))
+
+
+//thermal pad taxel6 -ignore
+transform_TAXELORIGIN_TAXEL6 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-6.51,-3.75,0))
+
+
+transform_TAXELORIGIN_TAXEL7 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-6.533,0,0))
+
+
+transform_TAXELORIGIN_TAXEL8 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(-3.267,5.66,0))
+
+
+transform_TAXELORIGIN_TAXEL9 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(0,11.317,0))
+
+
+//thermal pad taxel10 - ignore
+transform_TAXELORIGIN_TAXEL10 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(0,7.507,0))
+
+
+transform_TAXELORIGIN_TAXEL11 = iDynTree.Transform(iDynTree.Rotation(1,0,0,  \
+                                             0,1,0,  \
+                                             0,0,1),  \
+                           iDynTree.Position(3.267,5.66,0))
