@@ -1,3 +1,5 @@
+#!/usr/bin/env python 
+
 import yarp
 import numpy as np
 import matplotlib.pyplot as plt
@@ -53,15 +55,6 @@ for i in range(1,sens_group.size()):
     rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], 
                           [np.sin(theta),  np.cos(theta)]])
     off = np.array([triangle["u"],triangle["v"]])
-    print("triangle number: " + str(triangle["number"]))
-    print("theta " + str(theta))
-    print("triangleVertices[0]: " + str(triangleVertices[0]))
-    print("rotMatrix.dot(triangleVertices[0]): " + str(rotMatrix.dot(triangleVertices[0])))
-    print("triangleVertices[1]: " + str(triangleVertices[1]))
-    print("rotMatrix.dot(triangleVertices[1]): " + str(rotMatrix.dot(triangleVertices[1])))
-    print("triangleVertices[2]: " + str(triangleVertices[2]))
-    print("rotMatrix.dot(triangleVertices[2]): " + str(rotMatrix.dot(triangleVertices[2])))
-    
     triangle["vertex1"] = rotMatrix.dot(triangleVertices[0]) + off;
     triangle["vertex2"] = rotMatrix.dot(triangleVertices[1]) + off;
     triangle["vertex3"] = rotMatrix.dot(triangleVertices[2]) + off;
@@ -108,6 +101,8 @@ for triangle in triangles:
         theta = np.pi*triangle["orient"]/180
         rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], 
                                 [np.sin(theta),  np.cos(theta)]])
+        offset = rotMatrix.dot(taxelsPosInTriangle[i])
+
                                 
         
         taxel = {}
@@ -120,9 +115,7 @@ for triangle in triangles:
             taxel["type"] = "thermal"
             # u,v are the coordinates in millimeters of the taxels in 
             # the iCubSkinGui 
-            # compute the offset of the taxel with respect to the triangle center
-            offset = rotMatrix.dot(taxelsPosInTriangle[i])
-                                
+            # compute the offset of the taxel with respect to the triangle center                                
             taxel["u"] = triangle["u"] + offset[0]
             taxel["v"] = triangle["v"] + offset[1]
             
@@ -186,16 +179,10 @@ for key in trianglesDict:
         unknownPoints[1].append(trianglesDict[key]["v"]);
         unknownPointsKeys.append(key)
         
-print(np.array(trainingPoints))
-print(np.array(valuesX))
-unknownX = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesX), np.array(unknownPoints).T, method="cubic")
 
+unknownX = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesX), np.array(unknownPoints).T, method="cubic")
 unknownY = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesY), np.array(unknownPoints).T, method="cubic")
 unknownZ = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesZ), np.array(unknownPoints).T, method="cubic")
-
-print(unknownX)
-print(unknownY)
-print(unknownZ)
 
 ax.plot(unknownX,unknownY,unknownZ,'o',c="red");
 for key in unknownPointsKeys:
@@ -223,6 +210,8 @@ for triangle in triangles:
 
 triangleAx.set_xlim(np.min(point_x)-5,np.max(point_x)+5)
 triangleAx.set_ylim(np.min(point_y)-5,np.max(point_y)+5)
+taxelAx.set_xlim(np.min(point_x)-5,np.max(point_x)+5)
+taxelAx.set_ylim(np.min(point_y)-5,np.max(point_y)+5)
 
 #triangleAx.plot(point_x,point_y,'ro') 
 # draw triangle
@@ -237,12 +226,11 @@ for i in range(0,len(triangles)):
     triangleAx.annotate(label,(point_x[i],point_y[i]),ha='center',va='center')
     
 for taxel in taxels:
-    if( taxel["type"] == "tacticle" 
-    xy = (taxel["u"],taxel["v"])
-    taxelAx.add_patch(plt.Circle(xy, 0.4, color=[0.99, 0.99, 0.05]))
-    print(taxel["index"])
-    label = str(taxel["index"])
-    taxelAx.annotate(label,xy,ha='center',va='center')
+    if( taxel["type"] == "tactile" ):
+        xy = (taxel["u"],taxel["v"])
+        taxelAx.add_patch(plt.Circle(xy, 2, color=[0.99, 0.99, 0.05]))
+        label = str(taxel["index"])
+        taxelAx.annotate(label,xy,ha='center',va='center')
 
     
     
