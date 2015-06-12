@@ -110,6 +110,7 @@ for triangle in triangles:
         # index of the taxel in the skin part YARP port
         taxel["index"] = taxelId;
         taxelId = taxelId+1;
+        taxel["triangleNumber"] = triangle["number"]
 
         if( i is 6 or i is 10 ):
             taxel["type"] = "thermal"
@@ -182,9 +183,12 @@ unknownX = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(value
 unknownY = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesY), np.array(unknownPoints).T, method="cubic")
 unknownZ = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesZ), np.array(unknownPoints).T, method="cubic")
 
-#for index in range(0,len(unknownX)):
-#    if( np.isnan(unknownX[index]) ):
-#        
+# the taxel outside the 2D convex hull of the triangle center, use the triangle center
+for index in range(0,len(unknownX)):
+    if( np.isnan(unknownX[index]) ):
+        unknownX[index] = positionDict[taxel["triangleNumber"]](0)
+        unknownY[index] = positionDict[taxel["triangleNumber"]](1)
+        unknownZ[index] = positionDict[taxel["triangleNumber"]](2)
 
 print(unknownX)
 
