@@ -111,7 +111,7 @@ for triangle in triangles:
         taxel["index"] = taxelId;
         taxelId = taxelId+1;
 
-        if( i is 7 or i is 11 ):
+        if( i is 6 or i is 10 ):
             taxel["type"] = "thermal"
             # u,v are the coordinates in millimeters of the taxels in 
             # the iCubSkinGui 
@@ -173,21 +173,26 @@ for key in positionDict:
     valuesY.append(positionDict[key](1));
     valuesZ.append(positionDict[key](2));
 
-for key in trianglesDict:
-    if key not in  positionDict:
-        unknownPoints[0].append(trianglesDict[key]["u"]);
-        unknownPoints[1].append(trianglesDict[key]["v"]);
-        unknownPointsKeys.append(key)
+for taxel in taxels:
+    unknownPoints[0].append(taxel["u"]);
+    unknownPoints[1].append(taxel["v"]);
         
 
 unknownX = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesX), np.array(unknownPoints).T, method="cubic")
 unknownY = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesY), np.array(unknownPoints).T, method="cubic")
 unknownZ = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesZ), np.array(unknownPoints).T, method="cubic")
 
-ax.plot(unknownX,unknownY,unknownZ,'o',c="red");
-for key in unknownPointsKeys:
-    label = "ID: " + str(trianglesDict[key]["number"]);
-    ax.text(unknownX[unknownPointsKeys.index(key)],unknownY[unknownPointsKeys.index(key)],unknownZ[unknownPointsKeys.index(key)],label)
+#for index in range(0,len(unknownX)):
+#    if( np.isnan(unknownX[index]) ):
+#        
+
+print(unknownX)
+
+ax.plot(unknownX,unknownY,unknownZ,'.',c="blue");
+#for key in unknownPointsKeys:
+#    label = "ID: " + str(trianglesDict[key]["number"]);
+#    ax.text(unknownX[unknownPointsKeys.index(key)],unknownY[unknownPointsKeys.index(key)],unknownZ[unknownPointsKeys.index(key)],label)
+ax.plot(point_x3d,point_y3d,point_z3d,'o',c="red");
     
 
 
@@ -210,8 +215,8 @@ for triangle in triangles:
 
 triangleAx.set_xlim(np.min(point_x)-5,np.max(point_x)+5)
 triangleAx.set_ylim(np.min(point_y)-5,np.max(point_y)+5)
-taxelAx.set_xlim(np.min(point_x)-5,np.max(point_x)+5)
-taxelAx.set_ylim(np.min(point_y)-5,np.max(point_y)+5)
+taxelAx.set_xlim(np.min(point_x)-20,np.max(point_x)+20)
+taxelAx.set_ylim(np.min(point_y)-20,np.max(point_y)+20)
 
 #triangleAx.plot(point_x,point_y,'ro') 
 # draw triangle
