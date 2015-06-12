@@ -93,26 +93,44 @@ taxelsPosInTriangle.append(np.array([0, 7.507]))
 # taxel 11 
 taxelsPosInTriangle.append(np.array([3.267, 5.66]))
 
-# generate taxel list
-taxels = []
-taxelId = 0
+# generate taxel list, we allocate a list of the total number of triangles
+# dummy values (for the torso are 64) and then we overwrite the taxels 
+# for the real triangles 
+dummy_taxel = {}
+dummy_taxel["type"] = "dummy"
+# we put arbitrary big values of u and v so we don't have to worry about this
+# dummy taxel interpolation
+dummy_taxel["u"] = 10000;
+dummy_taxel["v"] = 10000;
+
+
+# the total number of the triangles is composed by both real triangles
+# and dummy triangles, is given by the length of the yarp vector published
+# on the port, divided by 12 (for the torso: 768/12 = 64)
+total_number_of_triangles = 64
+
+# number of taxels for triangle
+taxel_per_triangle = 12
+
+# list of taxels (from 0 to taxel_per_triangle) that are thermal 
+thermal_taxels_list = [6,10]
+
+taxels = total_number_of_triangles*taxel_per_triangle*12*[dummy_taxel]
+
 for triangle in triangles:
-    for i in range(0,12):
+    for i in range(0,taxel_per_triangle):
         theta = np.pi*triangle["orient"]/180
         rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], 
                                 [np.sin(theta),  np.cos(theta)]])
         offset = rotMatrix.dot(taxelsPosInTriangle[i])
-
-                                
         
         taxel = {}
         
         # index of the taxel in the skin part YARP port
-        taxel["index"] = taxelId;
-        taxelId = taxelId+1;
+        taxel["index"] = triangle["number"]*taxel_per_triangle+i;
         taxel["triangleNumber"] = triangle["number"]
 
-        if( i is 6 or i is 10 ):
+        if( i in thermal_taxels_list ):
             taxel["type"] = "thermal"
             # u,v are the coordinates in millimeters of the taxels in 
             # the iCubSkinGui 
@@ -130,7 +148,7 @@ for triangle in triangles:
             taxel["y"] = None
             taxel["z"] = None
 
-        taxels.append(taxel)
+        taxels[taxel["index"]] = taxel
         
         
 # triangle side in millimeters    
@@ -163,7 +181,6 @@ for key in positionDict:
 # interpolate ! 
 trainingPoints = ([],[])
 unknownPoints = ([],[])
-unknownPointsKeys = []
 valuesX = []
 valuesY = []
 valuesZ = []
@@ -184,20 +201,21 @@ unknownY = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(value
 unknownZ = scipy.interpolate.griddata(np.array(trainingPoints).T, np.array(valuesZ), np.array(unknownPoints).T, method="cubic")
 
 # the taxel outside the 2D convex hull of the triangle center, use the triangle center
-for index in range(0,len(unknownX)):
-    if( np.isnan(unknownX[index]) ):
-        unknownX[index] = positionDict[taxel["triangleNumber"]](0)
-        unknownY[index] = positionDict[taxel["triangleNumber"]](1)
-        unknownZ[index] = positionDict[taxel["triangleNumber"]](2)
-
-print(unknownX)
+for taxelIndex in range(0,len(unknownX)):
+    taxel = taxels[taxelIndex]
+    if( np.isnan(unknownX[taxelIndex]) and not(taxel["type"] is "dummy") ):
+        unknownX[taxelIndex] = positionDict[taxel["triangleNumber"]](0)
+        unknownY[taxelIndex] = positionDict[taxel["triangleNumber"]](1)
+        unknownZ[taxelIndex] = positionDict[taxel["triangleNumber"]](2)
 
 ax.plot(unknownX,unknownY,unknownZ,'.',c="blue");
 #for key in unknownPointsKeys:
 #    label = "ID: " + str(trianglesDict[key]["number"]);
 #    ax.text(unknownX[unknownPointsKeys.index(key)],unknownY[unknownPointsKeys.index(key)],unknownZ[unknownPointsKeys.index(key)],label)
 ax.plot(point_x3d,point_y3d,point_z3d,'o',c="red");
-    
+
+# export the 3d points to a skinManager "positions" compatible file 
+
 
 
 # 2d plot

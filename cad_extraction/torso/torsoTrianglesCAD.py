@@ -32,6 +32,8 @@ root_frame_T_chest_cover_cad_frame.getSemantics().setReferenceOrientationFrame(r
 # triangle center positions for some triangles in chest_cover_cad_frame,
 # contained in a dictonary where the triangle number is the key
 
+# we are currently saving position in the root_frame , but we should 
+# save them in the frame used for torso skin contacts instead. 
 positionDict = {}
 
 def addTriangle3DCenter(triangleNumber, x, y, z, ref_frame_id, positionDict):
