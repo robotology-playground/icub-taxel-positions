@@ -115,7 +115,10 @@ taxel_per_triangle = 12
 # list of taxels (from 0 to taxel_per_triangle) that are thermal 
 thermal_taxels_list = [6,10]
 
-taxels = total_number_of_triangles*taxel_per_triangle*12*[dummy_taxel]
+# taxel that is the center of the triangle
+center_taxel = 3;
+
+taxels = total_number_of_triangles*taxel_per_triangle*[dummy_taxel]
 
 for triangle in triangles:
     for i in range(0,taxel_per_triangle):
@@ -150,9 +153,6 @@ for triangle in triangles:
 
         taxels[taxel["index"]] = taxel
         
-        
-# triangle side in millimeters    
-triangle_side = 10
 
 variables= {}
 execfile( "torsoTrianglesCAD.py", variables )
@@ -214,8 +214,52 @@ ax.plot(unknownX,unknownY,unknownZ,'.',c="blue");
 #    ax.text(unknownX[unknownPointsKeys.index(key)],unknownY[unknownPointsKeys.index(key)],unknownZ[unknownPointsKeys.index(key)],label)
 ax.plot(point_x3d,point_y3d,point_z3d,'o',c="red");
 
-# export the 3d points to a skinManager "positions" compatible file 
+# export the 3d points to a skinManager "positions" compatible file
+def exportSkinManagerPositionTxtFile(taxels,posx,posy,posz,normx,normy,normz,name,filename):
+    assert(len(taxels) == len(posx))
+    assert(len(taxels) == len(posy))
+    assert(len(taxels) == len(posz))
+    assert(len(taxels) == len(normx))
+    assert(len(taxels) == len(normy))
+    assert(len(taxels) == len(normz))
+    out_file = open(filename,"w");
+    out_file.write("name    " + name + "\n");
+    out_file.write("spatial_sampling     taxel\n");
+    # the convention relative to taxel2repr is that dummy taxels are 
+    # mapped to -1, temperature taxel are mapped -2 and tacticle taxels
+    # are mapped to the index of the taxel that is the center of the triangle
+    out_file.write("taxel2Repr ( ")
+    for taxel in taxels:
+        if( taxel["type"] == "dummy" ):
+            out_file.write(" -1 ");
+        elif( taxel["type"] == "thermal"):
+            out_file.write(" -2 ");
+        elif( taxel["type"] == "tactile"):
+            out_file.write(" " + str(taxel["triangleNumber"]*taxel_per_triangle+center_taxel) + " ");
+        else:
+            assert(false)
+            
+    out_file.write(" )\n");
+    
+    # out write 
+    out_file.write("[calibration]\n");
+    for taxel in taxels:
+        if( taxel["type"] == "dummy" ):
+            out_file.write("0.0 0.0 0.0 0.0 0.0 0.0 \n");
+        elif( taxel["type"] == "thermal" or taxel["type"] == "tactile"):
+            taxelIndex = taxel["index"]
+            out_file.write(str(posx[taxelIndex]) + " " +  str(posy[taxelIndex]) + " " +  str(posz[taxelIndex]) + \
+                           " " + str(normx[taxelIndex]) + " " +  str(normy[taxelIndex]) + " " + str(normz[taxelIndex]) + "\n");
+        else:
+            assert(false)
+    out_file.write("\n")
 
+#normal for now are set to 0
+normx = [0]*len(unknownX)
+normy = [0]*len(unknownX)
+normz = [0]*len(unknownX)
+
+exportSkinManagerPositionTxtFile(taxels,unknownX,unknownY,unknownZ,normx,normy,normz,"chest","torso.txt");
 
 
 # 2d plot
