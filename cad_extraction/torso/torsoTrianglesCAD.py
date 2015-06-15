@@ -9,6 +9,8 @@
 # frame CS0 of Feature 907 of part RC_TLR_017_P_007.prt . 
 # We refer to this frame hereafter as chest_cover_cad_frame 
 
+# All the transform are expressed in millimeters
+
 # the transform between chest_cover_cad_frame and root_frame (with the
 # joints of the torso all in 0.0 position
 
@@ -17,17 +19,32 @@ import iDynTree
 # random id, just for iDynTree semantics check
 chest_cover_cad_frame_id = 1
 root_frame_id = 2
+chest_skin_frame_id = 10
 
 root_frame_T_chest_cover_cad_frame = \
     iDynTree.Transform(iDynTree.Rotation(   0,   0, -1.0, \
                                          -1.0,   0,    0, \
                                             0, 1.0,    0),\
-                       iDynTree.Position(27.69,-0.07,76.3));
+                       iDynTree.Position(27.69,-0.07,176.3));
                        
 root_frame_T_chest_cover_cad_frame.getSemantics().setPoint(chest_cover_cad_frame_id)    
 root_frame_T_chest_cover_cad_frame.getSemantics().setOrientationFrame(chest_cover_cad_frame_id)
 root_frame_T_chest_cover_cad_frame.getSemantics().setReferencePoint(root_frame_id)    
-root_frame_T_chest_cover_cad_frame.getSemantics().setReferenceOrientationFrame(root_frame_id)   
+root_frame_T_chest_cover_cad_frame.getSemantics().setReferenceOrientationFrame(root_frame_id)  
+
+# extracted from the iCubTorso
+root_frame_T_chest_skin_frame  = \
+    iDynTree.Transform(iDynTree.Rotation( -1, 0, 0, \
+                                           0, 0, 1, \
+                                           0, 1, 0), \
+    iDynTree.Position(-0007.81, 0.0, 0225.3)); 
+    
+root_frame_T_chest_skin_frame.getSemantics().setPoint(chest_skin_frame_id)    
+root_frame_T_chest_skin_frame.getSemantics().setOrientationFrame(chest_skin_frame_id)
+root_frame_T_chest_skin_frame.getSemantics().setReferencePoint(root_frame_id)    
+root_frame_T_chest_skin_frame.getSemantics().setReferenceOrientationFrame(root_frame_id) 
+
+chest_skin_frame_T_chest_cover_cad_frame =  root_frame_T_chest_skin_frame.inverse()*root_frame_T_chest_cover_cad_frame;
 
 # triangle center positions for some triangles in chest_cover_cad_frame,
 # contained in a dictonary where the triangle number is the key
@@ -40,7 +57,7 @@ def addTriangle3DCenter(triangleNumber, x, y, z, ref_frame_id, positionDict):
     pos = iDynTree.Position(x,y,z);
     pos.getSemantics().setReferencePoint(ref_frame_id);
     pos.getSemantics().setCoordinateFrame(ref_frame_id);
-    positionDict[triangleNumber] = root_frame_T_chest_cover_cad_frame*pos;
+    positionDict[triangleNumber] = chest_skin_frame_T_chest_cover_cad_frame*pos;
 
 
 addTriangle3DCenter(5,-49,0,103,chest_cover_cad_frame_id,positionDict)

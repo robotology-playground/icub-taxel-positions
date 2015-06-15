@@ -248,16 +248,16 @@ def exportSkinManagerPositionTxtFile(taxels,posx,posy,posz,normx,normy,normz,nam
             out_file.write("0.0 0.0 0.0 0.0 0.0 0.0 \n");
         elif( taxel["type"] == "thermal" or taxel["type"] == "tactile"):
             taxelIndex = taxel["index"]
-            out_file.write(str(posx[taxelIndex]) + " " +  str(posy[taxelIndex]) + " " +  str(posz[taxelIndex]) + \
+            out_file.write(str(posx[taxelIndex]/1000) + " " +  str(posy[taxelIndex]/1000) + " " +  str(posz[taxelIndex]/1000) + \
                            " " + str(normx[taxelIndex]) + " " +  str(normy[taxelIndex]) + " " + str(normz[taxelIndex]) + "\n");
         else:
             assert(false)
     out_file.write("\n")
 
-#normal for now are set to 0
-normx = [0]*len(unknownX)
-normy = [0]*len(unknownX)
-normz = [0]*len(unknownX)
+#normal for now are set to the x direction
+normx = [1.0]*len(unknownX)
+normy = [0.0]*len(unknownX)
+normz = [0.0]*len(unknownX)
 
 exportSkinManagerPositionTxtFile(taxels,unknownX,unknownY,unknownZ,normx,normy,normz,"chest","torso.txt");
 
