@@ -46,7 +46,7 @@ for i in range(1,sens_group.size()):
     triangle["gain"]   = triangle_group.get(5).asInt();
     triangle["mirror"] = triangle_group.get(6).asInt();
     
-       triangles.append(triangle)
+    triangles.append(triangle)
     trianglesDict[triangle["number"]] = triangle
     
 # sort the triangle list based on number (id)
