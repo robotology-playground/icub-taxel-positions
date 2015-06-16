@@ -1,16 +1,9 @@
 
 # In this file we saved some data extracted the CAD models of the iCub
-# In particular, we extracted the center of the circles of the covers 
-# that are used to house the electronics of the triangles.. we use them 
-# as an approximate reference of the 3D position of the center taxel in the world
+# In particular, we extracted the transformations between a 
+# R_SOLE_FRAME and the centers of each taxel Triangles placed in an arrangement under 
+# the foot. Then, we express the same in the FT sensor frame of the right foot.
 
-# We extracted this data from the RC_TLR_017_P_007.prt part . 
-# All the positions are expressed with respect to the 
-# frame CS0 of Feature 907 of part RC_TLR_017_P_007.prt . 
-# We refer to this frame hereafter as chest_cover_cad_frame 
-
-# the transform between chest_cover_cad_frame and root_frame (with the
-# joints of the torso all in 0.0 position
 
 import iDynTree
 import numpy as np
@@ -29,7 +22,7 @@ FTsensor_r_foot_T_r_sole.getSemantics().setOrientationFrame(r_sole_cad_frame_id)
 FTsensor_r_foot_T_r_sole.getSemantics().setReferencePoint(FTsensor_r_foot_frame_id)    
 FTsensor_r_foot_T_r_sole.getSemantics().setReferenceOrientationFrame(FTsensor_r_foot_frame_id)   
 
-# triangle center positions for some triangles in r_sole_cad_frame,
+# triangle center positions and FT sensor-to-Triangle center transformations for the triangles in FTsensor_r_foot_frame,
 # contained in a dictonary where the triangle number is the key
 r_sole_T_triangle = {}
 ft_r_foot_T_triangle = {}

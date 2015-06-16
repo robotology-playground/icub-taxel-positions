@@ -31,11 +31,6 @@ print("Reading taxel positions from " + rf.findFileByName(skinGuiFileName))
 
 sens_group = prop.findGroup("SENSORS")
 
-"""triangleSide = 30
-triangleVertices = []
-triangleVertices.append(np.array([0.0, np.sqrt(3)*triangleSide/3]))
-triangleVertices.append(np.array([triangleSide/2, -np.sqrt(3)*triangleSide/6]))
-triangleVertices.append(np.array([-triangleSide/2, -np.sqrt(3)*triangleSide/6]))"""
 
 triangles = []
 trianglesDict = {}
@@ -51,17 +46,7 @@ for i in range(1,sens_group.size()):
     triangle["gain"]   = triangle_group.get(5).asInt();
     triangle["mirror"] = triangle_group.get(6).asInt();
     
-    # saving triangle vertices in u/v space
-    """ theta = np.pi*triangle["orient"]/180.0
-    rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], 
-                          [np.sin(theta),  np.cos(theta)]])
-    off = np.array([triangle["u"],triangle["v"]])
-    triangle["vertex1"] = rotMatrix.dot(triangleVertices[0]) + off;
-    triangle["vertex2"] = rotMatrix.dot(triangleVertices[1]) + off;
-    triangle["vertex3"] = rotMatrix.dot(triangleVertices[2]) + off;"""
-                                
-
-    triangles.append(triangle)
+       triangles.append(triangle)
     trianglesDict[triangle["number"]] = triangle
     
 # sort the triangle list based on number (id)
@@ -98,7 +83,7 @@ taxelsPosInTriangle.append(np.array([3.267, 5.66, 0.0]))
 
 
 # generate taxel list, we allocate a list of the total number of triangles
-# dummy values (for the torso are 64) and then we overwrite the taxels 
+# dummy values (for the foot are 32) and then we overwrite the taxels 
 # for the real triangles 
 dummy_taxel = {}
 dummy_taxel["type"] = "dummy"
@@ -112,7 +97,7 @@ dummy_taxel["triangleNumber"] = None;
 
 # the total number of the triangles is composed by both real triangles
 # and dummy triangles, is given by the length of the yarp vector published
-# on the port, divided by 12 (for the torso: 768/12 = 64)
+# on the port, divided by 12 (for the torso: 384/12 = 32)
 total_number_of_triangles = 32
 
 # number of taxels for triangle
@@ -142,18 +127,6 @@ for triangle in triangles:
 	
 	taxel_trans[i] = iDynTree.Transform(iDynTree.Rotation(1,0,0,0,1,0,0,0,1),iDynTree.Position(taxelsPosInTriangle[i][0],taxelsPosInTriangle[i][1],taxelsPosInTriangle[i][2]))
 	
-	
-
-
-
-	#theta = np.pi*triangle["orient"]/180
-        #theta = np.pi* orientation[triangle["number"]]/180
-	#rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], 
-        #                  [np.sin(theta),  np.cos(theta)]])
-        #print rotMatrix
-	#print triangle["number"]
-        #offset = rotMatrix.dot(taxelsPosInTriangle[i])
-	
 	taxel = {}
         
         # index of the taxel in the skin part YARP port
@@ -165,26 +138,22 @@ for triangle in triangles:
 
         if( i in thermal_taxels_list ):
             taxel["type"] = "thermal"
-            # u,v are the coordinates in millimeters of the taxels in 
-            # the iCubSkinGui 
-            # compute the offset of the taxel with respect to the triangle center                                
+            # x,y,z are the coordinates in millimeters of the taxels 
+            # with respect to the FT sensor frame on the right foot
+                                            
             taxel["x"] = ft_r_foot_T_taxel[taxel["index"]].getPosition()(0)/1000
             taxel["y"] = ft_r_foot_T_taxel[taxel["index"]].getPosition()(1)/1000
             taxel["z"] = ft_r_foot_T_taxel[taxel["index"]].getPosition()(2)/1000
-            #taxel["x"] = triangle["u"] + offset[0]
-            #taxel["y"] = triangle["v"] + offset[1]
-            #taxel["z"] = 0
-            
+
+            #u,v coordinates are referred in the icubSkinGui, not relevant for estimation
+                      
             taxel["u"] = None
             taxel["v"] = None
-	    #print [offset[0],offset[1],taxel["triangleNumber"]]            
-            # the taxel x, y, z position in root frame will be filled by
-            # the interpolation procedure
+	    
+ 
         else:
             taxel["type"] = "tactile"
-            #taxel["x"] = triangle["u"] + offset[0]
-            #taxel["y"] = triangle["v"] + offset[1]
-            #taxel["z"] = 0            
+           
             taxel["x"] = ft_r_foot_T_taxel[taxel["index"]].getPosition()(0)/1000
             taxel["y"] = ft_r_foot_T_taxel[taxel["index"]].getPosition()(1)/1000
             taxel["z"] = ft_r_foot_T_taxel[taxel["index"]].getPosition()(2)/1000
@@ -192,7 +161,7 @@ for triangle in triangles:
             
             taxel["u"] = None
             taxel["v"] = None
-	    #print [offset[0],offset[1],taxel["triangleNumber"]]
+
         taxels[taxel["index"]] = taxel
 
 
